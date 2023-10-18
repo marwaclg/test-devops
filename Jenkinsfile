@@ -7,12 +7,23 @@ pipeline {
   }
   stages {
     stage('stage1') {
-      steps {
-        sh 'grep user /etc/passwd'
+      parallel {
+        stage('stage1') {
+          steps {
+            sh 'grep user /etc/passwd'
+          }
+        }
+
+        stage('stage2') {
+          steps {
+            sh 'ls /var/lib/jenkins'
+          }
+        }
+
       }
     }
 
-    stage('') {
+    stage('error') {
       steps {
         sh 'ifconfig'
       }
